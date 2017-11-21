@@ -15,6 +15,7 @@ import OrderSuccess from '@/pages/OrderSuccess'
 Vue.use(Router)
 // 导出VueRouter的实例
 export default new Router({
+  // mode: 'history',
   // 配置路由
   routes: [
     {

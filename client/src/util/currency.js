@@ -3,15 +3,15 @@ const digitsRE = /(\d{3})(?=\d)/g
 /**
  * 货币的过滤器函数
  */
-export function currency (value, currency, decimals) {
+export function currency (value, currency, decimals = 2) {
   // 转换成浮点数
   value = parseFloat(value)
   // 无穷大或者不为0的值则返回空字符串
   if (!isFinite(value) || (!value && value !== 0)) return ''
   // 传入的货币类型不为空则使用当前的货币，否则默认使用￥
-  currency = currency != null ? currency : '￥'
-  // 小数点默认2位
-  decimals = decimals != null ? decimals : 2
+  currency = currency || '￥'
+  // // 小数点默认2位
+  // decimals = decimals || 2
   // 将数字转为绝对值，并保留几位小数
   var stringified = Math.abs(value).toFixed(decimals)
   // 获取整数部分

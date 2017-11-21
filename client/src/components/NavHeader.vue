@@ -95,9 +95,9 @@ export default{
   },
   methods: {
     checkLogin () {
-      this.$http.get('/user/checkLogin').then(response => {
+      this.$http.get('/users/checkLogin').then(response => {
         var res = response.data
-        if (res.status === 0) {
+        if (res.status === '0') {
           this.$store.commit('updateUserInfo', res.result)
           this.loginModalFlag = false
         } else {
@@ -112,12 +112,12 @@ export default{
         this.errorTip = true
         return
       }
-      this.$http.post('/user/login', {
+      this.$http.post('/users/login', {
         userName: this.userName,
         userPwd: this.userPwd
       }).then(response => {
         let res = response.data
-        if (res.status === 0) {
+        if (res.status === '0') {
           this.errorTip = false
           this.loginModalFlag = false
           this.$store.commit('updateUserInfo', res.result.userName)
@@ -128,16 +128,16 @@ export default{
       })
     },
     logOut () {
-      this.$http.post('/user/logout').then(response => {
+      this.$http.post('/users/logout').then(response => {
         let res = response.data
-        if (res.status === 0) {
+        if (res.status === '0') {
           this.$store.commit('updateUserInfo', res.result.userName)
           this.$store.commit('clearCartCount')
         }
       })
     },
     getCartCount () {
-      this.$http.get('user/getCartCount').then(res => {
+      this.$http.get('users/getCartCount').then(res => {
         res = res.data
         this.$store.commit('updateCartCount', res.result)
       })

@@ -53,7 +53,7 @@ new Vue({
   methods: {
     // 检查是否登录
     checkLogin () {
-      this.$http.get('user/checkLogin')
+      this.$http.get('users/checkLogin')
       .then(res => {
         res = res.data
         // 如果能够返回用户的信息
@@ -70,7 +70,7 @@ new Vue({
     },
     // 得到购物车中商品数量
     getCartCount () {
-      this.$http.get('user/getCartCount')
+      this.$http.get('users/getCartCount')
       .then(res => {
         res = res.data
         // 如果成功的获得购物车数量

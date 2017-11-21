@@ -93,25 +93,25 @@ export default {
       sortFlag: true,
       page: 1,
       pageSize: 8,
-      busy: true,
+      busy: false,
       loading: false,
       mdShow: false,
       mdShowCart: false,
       priceFilter: [
         {
-          starPrice: '0.00',
+          startPrice: '0.00',
           endPrice: '100.00'
         },
         {
-          starPrice: '100.00',
+          startPrice: '100.00',
           endPrice: '500.00'
         },
         {
-          starPrice: '500.00',
+          startPrice: '500.00',
           endPrice: '1000.00'
         },
         {
-          starPrice: '1000.00',
+          startPrice: '1000.00',
           endPrice: '5000.00'
         }
       ],
@@ -124,7 +124,7 @@ export default {
     this.getGoodsList()
   },
   methods: {
-    getGoodsList () {
+    getGoodsList (loadMoreFlag) {
       var params = {
         page: this.page,
         pagesize: this.pageSize,
@@ -136,11 +136,30 @@ export default {
         res = res.data
         this.loading = false
         if (res.status === '0') {
-          this.goodsList = res.result.list
+          if (loadMoreFlag) {
+            this.goodsList = this.goodsList.concat(res.result.list)
+            this.busy = res.result.count < this.pageSize
+          } else {
+            this.goodsList = res.result.list
+            this.busy = false
+          }
         }
       })
     },
+    sortGoods () {
+      this.sortFlag = !this.sortFlag
+      this.page = 1
+      this.getGoodsList()
+    },
+    setPriceFilter (index) {
+      this.priceChecked = index
+      this.page = 1
+      this.getGoodsList()
+    },
     loadMore () {
+      this.busy = true
+      this.page++
+      this.getGoodsList(true)
     },
     closeModal () {
     }
