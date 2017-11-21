@@ -1,6 +1,5 @@
 <template>
     <div>
-      <nav-header></nav-header>
       <nav-bread>
         <span>热门商品</span>
       </nav-bread>
@@ -77,16 +76,17 @@
         </div>
       </modal>
       <div class="md-overlay" v-show="overLayFlag" @click.stop="closePop"></div>
-      <nav-footer></nav-footer>
     </div>
 </template>
 
 <script>
-import Public from '../Public'
-import Modal from '../components/Modal.vue'
+import Public from '@/Public'
+import Modal from '@/components/Modal.vue'
 export default {
   mixins: [Public],
-  components: { Modal },
+  components: {
+    Modal
+  },
   data () {
     return {
       goodsList: [],

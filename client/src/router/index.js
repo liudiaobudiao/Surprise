@@ -1,18 +1,25 @@
 import Vue from 'vue'
+// 引入VueRouter插件
 import Router from 'vue-router'
+// 引入商品列表组件
 import GoodsList from '@/pages/GoodsList'
-import Address from '@/pages/Address'
+// 引入购物车组件
 import Cart from '@/pages/Cart'
+// 引入地址组件
+import Address from '@/pages/Address'
+// 引入订单确认组件
 import OrderConfirm from '@/pages/OrderConfirm'
+// 引入订单成功组件
 import OrderSuccess from '@/pages/OrderSuccess'
-
+// 使用VueRouter组件
 Vue.use(Router)
-
+// 导出VueRouter的实例
 export default new Router({
+  // 配置路由
   routes: [
     {
       path: '/',
-      name: 'GoodsList',
+      name: 'Index',
       component: GoodsList
     },
     {
@@ -34,7 +41,11 @@ export default new Router({
       path: '/orderSuccess',
       name: 'OrderSuccess',
       component: OrderSuccess
+    },
+    {
+      path: '*',
+      name: 'Other',
+      component: GoodsList
     }
-
   ]
 })

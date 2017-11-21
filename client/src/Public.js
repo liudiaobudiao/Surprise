@@ -1,11 +1,8 @@
-import NavHeader from './components/NavHeader.vue'
-import NavFooter from './components/NavFooter.vue'
-import NavBread from './components/NavBread.vue'
-
+// 引入面包屑导航组件
+import NavBread from '@/components/NavBread'
+// 导出组件
 export default {
   components: {
-    NavHeader,
-    NavFooter,
     NavBread
   }
 }
