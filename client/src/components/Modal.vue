@@ -22,8 +22,9 @@
     @click="closeModal"></div>
   </div>
 </template>
+
 <script>
-export default{
+export default {
   props: ['mdShow'],
   methods: {
     closeModal () {

@@ -122,17 +122,13 @@ router.get("/cartList", (req,res,next) => {
 //6.购物车删除
 router.post("/cartDel", (req,res,next) => {
   let userId = req.cookies.userId,productId = req.body.productId;
-  User.update({
-        userId:userId
-      },{
+  User.update({userId:userId},{
       $pull:{
-        'cartList':{
-          productId
-        }
+        'cartList':{productId}
       }
     }, (err,doc) => {
       if(err){
-        res.json({
+        return res.json({
           status:'1',
           msg:err.message,
           result:''

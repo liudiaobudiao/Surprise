@@ -161,7 +161,20 @@ export default {
       this.page++
       this.getGoodsList(true)
     },
+    addCart (productId) {
+      this.$http.post('/goods/addCart', {productId}).then(res => {
+        res = res.data
+        if (res.status === '0') {
+          this.mdShowCart = true
+          this.$store.commit('updateCartCount', 1)
+        } else {
+          this.mdShow = true
+        }
+      })
+    },
     closeModal () {
+      this.mdShow = false
+      this.mdShowCart = false
     }
   }
 }
