@@ -3,13 +3,13 @@ let router = express.Router();
 let User = require('./../models/user');
 let sd = require('silly-datetime');
 
-//1.登录接口
+// 1.登录接口
 router.post("/login", (req,res,next) => {
   let param = {
-    userName:req.body.userName,//获取用户名
-    userPwd:req.body.userPwd//获取密码
+    userName:req.body.userName,             //获取用户名
+    userPwd:req.body.userPwd                //获取密码
   }
-  console.log(param);
+  // console.log(param);
   //查找用户
   User.findOne(param, (err,doc) => {
     if(err){
@@ -43,7 +43,7 @@ router.post("/login", (req,res,next) => {
   });
 });
 
-//2.登出接口
+// 2.退出接口
 router.post("/logout", (req,res,next) => {
   //清空cookie的用户ID,设置过期时间为上一秒
   res.cookie("userId","",{
@@ -55,7 +55,8 @@ router.post("/logout", (req,res,next) => {
     result:''
   });
 });
-//3.检查用户是否已经登录
+
+// 3.检查用户是否已经登录
 router.get("/checkLogin", (req,res,next) => {
   if(req.cookies.userId){
     return res.json({
@@ -70,16 +71,17 @@ router.get("/checkLogin", (req,res,next) => {
     result:''
   });
 });
-//4.获取购物车数量
+
+// 4.获取购物车数量
 router.get("/getCartCount", (req,res,next) => {
   if (!(req.cookies && req.cookies.userId)){
-    res.json({
+    return res.json({
       status:"0",
       msg:"当前用户不存在"
     });
   }
-  console.log("userId:"+req.cookies.userId);
-  let userId = req.cookies.userId;//得到用户ID
+  // console.log("userId:"+req.cookies.userId);
+  let userId = req.cookies.userId;              //得到用户ID
   User.findOne({userId}, (err,doc) => {
     if(err){
       return res.json({
@@ -89,7 +91,7 @@ router.get("/getCartCount", (req,res,next) => {
     }
     let cartList = doc.cartList;
     let cartCount = 0;
-    cartList.map((item) => {
+    cartList.map(item => {
       cartCount += parseFloat(item.productNum);
     });
     return res.json({
@@ -100,18 +102,18 @@ router.get("/getCartCount", (req,res,next) => {
   });
 });
 
-//5.查询当前用户的购物车数据
+// 5.查询当前用户的购物车数据
 router.get("/cartList", (req,res,next) => {
   let userId = req.cookies.userId;
   User.findOne({userId}, (err,doc) => {
     if(err){
-      res.json({
+      return res.json({
         status:'1',
         msg:err.message,
         result:''
       });
     }
-    res.json({
+    return res.json({
       status:'0',
       msg:'',
       result:doc.cartList
@@ -119,9 +121,10 @@ router.get("/cartList", (req,res,next) => {
   });
 });
 
-//6.购物车删除
+// 6.购物车删除
 router.post("/cartDel", (req,res,next) => {
-  let userId = req.cookies.userId,productId = req.body.productId;
+  let userId = req.cookies.userId,
+      productId = req.body.productId;
   User.update({userId:userId},{
       $pull:{
         'cartList':{productId}
@@ -142,7 +145,7 @@ router.post("/cartDel", (req,res,next) => {
   });
 });
 
-//7.修改商品数量
+// 7.修改商品数量
 router.post("/cartEdit", (req,res,next) => {
   let userId = req.cookies.userId,//用户ID
     productId = req.body.productId,//产品ID
@@ -166,7 +169,7 @@ router.post("/cartEdit", (req,res,next) => {
     });
   })
 });
-//8.选中所有
+// 8.选中所有
 router.post("/editCheckAll", (req,res,next) => {
   let userId = req.cookies.userId,//用户ID
   checkAll = req.body.checkAll?'1':'0';//选中为1未选中为0
@@ -199,7 +202,8 @@ router.post("/editCheckAll", (req,res,next) => {
     }
   });
 });
-//9.查询用户地址接口
+
+// 9.查询用户地址接口
 router.get("/addressList", (req,res,next) => {
   let userId = req.cookies.userId;
   User.findOne({userId}, (err,doc) => {
@@ -217,7 +221,8 @@ router.get("/addressList", (req,res,next) => {
     });
   })
 });
-//10.设置默认地址接口
+
+// 10.设置默认地址接口
 router.post("/setDefault", (req,res,next) => {
   let userId = req.cookies.userId,
   addressId = req.body.addressId;
@@ -261,6 +266,7 @@ router.post("/setDefault", (req,res,next) => {
     })
   });
 });
+
 // 添加新地址
 router.post("/addAddress", (req, res) => {
   let { userId } = req.cookies
@@ -386,6 +392,7 @@ router.post("/payMent", (req,res,next) => {
     });
   });
 });
+
 //13.根据订单Id查询订单信息
 router.get("/orderDetail", (req,res,next) => {
   let userId = req.cookies.userId,orderId = req.param("orderId");
@@ -428,4 +435,5 @@ router.get("/orderDetail", (req,res,next) => {
     })
   })
 });
+
 module.exports = router;

@@ -33,7 +33,7 @@
           <a href="javascript:void(0)" class="navbar-link" @click="logOut" v-else>退出</a>
           <div class="navbar-cart-container">
             <span class="navbar-cart-count" v-text="cartCount" v-if="cartCount"></span>
-            <a class="navbar-link navbar-cart-link" href="/#/cart">
+            <a class="navbar-link navbar-cart-link" @click="goCart">
               <svg class="navbar-cart-logo">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart"></use>
               </svg>
@@ -95,8 +95,8 @@ export default{
   },
   methods: {
     checkLogin () {
-      this.$http.get('/users/checkLogin').then(response => {
-        var res = response.data
+      this.$http.get('/users/checkLogin').then(res => {
+        res = res.data
         if (res.status === '0') {
           this.getCartCount()
           this.$store.commit('updateUserInfo', res.result)
@@ -142,6 +142,16 @@ export default{
         res = res.data
         if (res.status === '0') {
           this.$store.commit('updateCartCount', res.result)
+        }
+      })
+    },
+    goCart () {
+      this.$http.get('/users/checkLogin').then(res => {
+        res = res.data
+        if (res.status === '0') {
+          this.$router.push('/cart')
+        } else {
+          this.loginModalFlag = true
         }
       })
     }

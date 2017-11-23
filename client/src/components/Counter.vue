@@ -8,14 +8,14 @@
 <style>
 </style>
 <script>
-export default{
-  props:["num"],
-  methods:{
-    increment(){
-      this.$emit("incre")
+export default {
+  props: ['num'],
+  methods: {
+    increment () {
+      this.$emit('incre')
     },
-    decrement(){
-      this.$emit("decre")
+    decrement () {
+      this.$emit('decre')
     }
   }
 }

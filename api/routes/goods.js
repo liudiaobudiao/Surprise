@@ -49,7 +49,8 @@ router.get("/list", (req,res,next) => {
 
 //2.加入到购物车
 router.post("/addCart", (req,res,next) => {
-  let userId = req.cookies.userId,productId = req.body.productId;
+  let userId = req.cookies.userId,
+      productId = req.body.productId;
   if (!productId) {
     return res.json({
       status: '3',
@@ -63,15 +64,15 @@ router.post("/addCart", (req,res,next) => {
         msg:err.message
       })
     }
-    console.log("userDoc:"+userDoc);
-    let goodsItem = '';//购物项,如果和购物车中的某项一样，则购物车中的数量+1
+    // console.log("userDoc:"+userDoc);
+    let goodsItem = '';                     //购物项,如果和购物车中的某项一样，则购物车中的数量+1
     userDoc.cartList.forEach((item) => {
         if(item.productId === productId){
           goodsItem = item;
           item.productNum ++;
         }
     });
-    if(goodsItem){//如果购买的东西在购物车中已经有则直接保存
+    if(goodsItem){                          //如果购买的东西在购物车中已经有则直接保存
       userDoc.save((err2,doc2) => {
         if(err2){
           return res.json({
@@ -85,7 +86,7 @@ router.post("/addCart", (req,res,next) => {
           result:'suc'
         })
       })
-    }else{//如果购买的东西之前未购买过
+    }else{      //如果购买的东西之前未购买过
       //查找商品
       Goods.findOne({productId}, (err1,doc) => {
         if(err1){
@@ -95,10 +96,10 @@ router.post("/addCart", (req,res,next) => {
           })
         }
         console.log(doc);
-        doc.productNum = 1;//设置购买的商品是一个
-        doc.checked = 1;//设置已经选中
-        userDoc.cartList.push(doc);//将这个商品添加到购物清单中
-        userDoc.save((err2,doc2) => {//保存用户文档
+        doc.productNum = 1;                   //设置购买的商品是一个
+        doc.checked = 1;                      //设置已经选中
+        userDoc.cartList.push(doc);           //将这个商品添加到购物清单中
+        userDoc.save((err2,doc2) => {         //保存用户文档
           if(err2){
             return res.json({
               status:"1",

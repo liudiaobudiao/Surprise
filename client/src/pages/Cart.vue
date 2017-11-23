@@ -129,7 +129,7 @@
       </div>
     </div>
     <Modal :mdShow="modalConfirm" @close="closeModal">
-      <p slot="message">你确认要删除此条数据吗?</p>
+      <p slot="message">你确认要删除此商品吗?</p>
       <div slot="btnGroup">
         <a class="btn btn--m" href="javascript:;" @click="delCart">确认</a>
         <a class="btn btn--m btn--red" href="javascript:;" @click="modalConfirm = false">关闭</a>
@@ -142,6 +142,7 @@
   import Pubic from '@/Public'
   import Modal from '@/components/Modal'
   import '@/assets/css/cart.css'
+
   export default {
     data () {
       return {

@@ -409,7 +409,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.hidden, hide {
+.hidden, .hide {
   display: none;
 }
 

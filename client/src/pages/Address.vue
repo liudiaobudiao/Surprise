@@ -87,7 +87,7 @@
             </div>
 
             <div class="shipping-addr-more">
-              <a class="addr-more-btn up-down-btn" href="javascript:;" @click="expand" v-bind:class="{'open':limit>3}">
+              <a class="addr-more-btn up-down-btn" href="javascript:;" @click="expand" v-bind:class="{'open':limit>3}" v-if="addressList.length > 3">
                 更多
                 <i class="i-up-down">
                   <i class="i-up-down-l"></i>
@@ -105,10 +105,20 @@
             <div class="shipping-method">
               <ul>
                 <li class="check">
-                  <div class="name">标准</div>
-                  <div class="price">免费</div>
+                  <div class="name">
+                    <input type="radio" name="pay" id="zfb" checked>
+                    <label for="zfb">支付宝</label>
+                  </div>
+                  <div class="name">
+                      <input type="radio" name="pay" id="wx">
+                      <label for="wx">微信</label>
+                  </div>
+                  <div class="name">
+                      <input type="radio" name="pay" id="yhk">
+                      <label for="yhk">银行卡</label>
+                  </div>
                   <div class="shipping-tips">
-                    <p>下订单后，将会在7天之内送达</p>
+                    <p>11:00前付款，承诺明日送达</p>
                   </div>
                 </li>
               </ul>
