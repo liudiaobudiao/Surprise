@@ -261,6 +261,41 @@ router.post("/setDefault", (req,res,next) => {
     })
   });
 });
+// 添加新地址
+router.post("/addAddress", (req, res) => {
+  let { userId } = req.cookies
+  let { userName, streetName, postCode, tel, isDefault } = req.body
+  let addressId = (new Date().getTime()) + Number.parseInt(Math.random() * 9999) + Number.parseInt(Math.random() * 9999)
+  User.findOne({ userId }, (err, doc) => {
+    console.log(doc)
+    if (err) {
+      return res.json({
+        status: '1',
+        msg: err.message
+      })
+    }
+    doc.addressList.push({
+      addressId,
+      userName,
+      streetName,
+      postCode,
+      tel,
+      isDefault
+    })
+    doc.save((err, doc) => {
+      if (err) {
+        return res.json({
+          status: '1',
+          msg: err.message
+        })
+      }
+      res.json({
+        status: '0',
+        msg: '添加收货地址成功'
+      })
+    })
+  })
+})
 
 //11.删除地址接口
 router.post("/delAddress", (req,res,next) => {

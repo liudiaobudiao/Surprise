@@ -235,7 +235,13 @@
         })
       },
       checkOut () {
-
+        if (this.checkedCount > 0) {
+          this.$router.push({
+            path: '/address'
+          })
+        } else {
+          alert('购物车，必须有选中商品，才能去结账！')
+        }
       }
     }
   }
